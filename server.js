@@ -8,9 +8,8 @@ require('dotenv').config();
 express.application.use('/', express.static(path.join(__dirname, 'public')));
 
 
-
-
-
+//routes
+express.application.use('/', require('./routes/root'));
 
 
 
