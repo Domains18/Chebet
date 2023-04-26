@@ -6,12 +6,14 @@ const path = require('path');
 
 const app = express();
 
+
+//middlewares
+app.use(express.json());
+
+
+
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-
 
 // default routes
 app.use('/', require('./routes/root'));
