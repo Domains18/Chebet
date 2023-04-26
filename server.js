@@ -2,9 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const PORT = process.env.PORT || 3500;
 const path = require('path');
-
+const { logger } = require('./middlewares/logger');
 
 const app = express();
+
+app.use(logger);
+
 
 
 //middlewares
