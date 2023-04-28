@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3500;
 const path = require('path');
 const { logger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 app.use(logger);
@@ -12,7 +13,7 @@ app.use(logger);
 
 //middlewares
 app.use(express.json());
-
+app.use(cookieParser);
 
 
 //static files
