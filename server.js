@@ -5,10 +5,11 @@ const path = require('path');
 const { logger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
+const cors = require('cors')
 const app = express();
 
 app.use(logger);
-
+app.use(cors());
 
 
 //middlewares
