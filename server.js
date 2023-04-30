@@ -21,7 +21,7 @@ app.use(cookieParser);
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// default routes
+// dfault routes
 app.use('/', require('./routes/root'));
 app.all('*', (req, res) => {
     res.status(404);
