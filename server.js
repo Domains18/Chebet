@@ -16,11 +16,11 @@ const { logEvents, logger } = require('./middlewares/logger');
 connectDB();
 
 app.use(logger);
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 //middlewares
 app.use(express.json());
-app.use(cookieParser);
+// app.use(cookieParser);
 
 
 //static files

@@ -36,7 +36,7 @@ const createNewUser = expressAsyncHandler(async (req, res) => {
 const updateUser = expressAsyncHandler(async (req, res) => {
 
     const { id, userName, password, roles, active } = req.body;
-    if(!id|| !userName || !password || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean'){
+    if (!id || !userName || !password || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -63,8 +63,21 @@ const updateUser = expressAsyncHandler(async (req, res) => {
 
 const deleteUser = expressAsyncHandler(async (req, res) => {
 
-
-
+    const { id } = req.body;
+    if (!id) {
+        return res.status(400).json({ message: 'User ID is required' });
+    }
+    const notes = await Note.findOne({ user: id }).lean().exec();
+    if (notes?.length) {
+        return res.status(400).json({ message: 'User has assigned notes, cannot delete' });
+    }
+    const user = await User.findByIdAndDelete(id).exec();
+    if (!user) {
+        return res.status(400).json({ message: 'User not found' });
+    }
+    const result = await user.deleteOne();
+    const reply = `username ${result.userName} with ID ${result._id} deleted`;
+    res.json(reply);
 });
 
 
