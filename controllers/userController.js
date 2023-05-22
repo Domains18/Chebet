@@ -28,9 +28,11 @@ const createNewUser = expressAsyncHandler(async (req, res) => {
 
     if (user) {
         res.status(201).json({ message: `New User ${userName} succesfully created` });
+        
     } else {
         res.status(400).json({ message: 'Invalid user data' });
     }
+
 });
 
 const updateUser = expressAsyncHandler(async (req, res) => {
