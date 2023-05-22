@@ -28,7 +28,7 @@ const createNewUser = expressAsyncHandler(async (req, res) => {
 
     if (user) {
         res.status(201).json({ message: `New User ${userName} succesfully created` });
-        
+
     } else {
         res.status(400).json({ message: 'Invalid user data' });
     }
@@ -38,7 +38,7 @@ const createNewUser = expressAsyncHandler(async (req, res) => {
 const updateUser = expressAsyncHandler(async (req, res) => {
 
     const { id, userName, password, roles, active } = req.body;
-    if (!id || !userName || !password || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
+    if (!id || !userName  || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -51,6 +51,7 @@ const updateUser = expressAsyncHandler(async (req, res) => {
     if (duplicate && duplicate._id.toString() !== id) {
         return res.status(409).json({ message: 'User already exists' });
     }
+
     user.userName = userName;
     user.roles = roles;
     user.active = active;
@@ -59,7 +60,7 @@ const updateUser = expressAsyncHandler(async (req, res) => {
         user.password = await bcrypt.hash(password, 10);
     }
     const updatedUser = await user.save();
-    re.json({ message: 'User updated', user: updatedUser });
+    res.json({ message: 'User updated', user: updatedUser });
 });
 
 
