@@ -20,6 +20,7 @@ app.use(logger);
 
 //middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser);
 
 
@@ -27,7 +28,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', require('./routes/userRoutes'));
-
+app.use('/notes', require('./routes/noteRoutes'));
 // default routes
 app.use('/', require('./routes/root'));
 app.all('*', (req, res) => {
