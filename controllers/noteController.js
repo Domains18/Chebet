@@ -47,8 +47,19 @@ const updateNote = expressAsyncHandler(async (req, res) => {
     updatedNote ? res.status(200).json({ message: `Note ${title} succesfully updated` }) : res.status(400).json({ message: 'Invalid note data' });
 })
 
+const deleteNote = expressAsyncHandler(async (req, res) => {
+    const { id } = req.body;
+    if (!id) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+    const note = await Note.findById(id).exec();
+    if (!note) {
+        return res.status(404).json({ message: 'Note not found' });
+    }   
+    const deletedNote = await note.deleteOne();
+})
 
 
 
 
-module.exports = { getAllNotes, createNewNote }
+module.exports = { getAllNotes, createNewNote, updateNote, deleteNote }
