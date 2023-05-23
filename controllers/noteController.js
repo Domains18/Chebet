@@ -26,6 +26,27 @@ const createNewNote = expressAsyncHandler(async (req, res) => {
 });
 
 
+const updateNote = expressAsyncHandler(async (req, res) => { 
+    const { id, user, title, text, completed } = req.body;
+
+    if(!id || !user || !title || !text || typeof completed !== 'boolean') {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+    const note = await Note.findById(id).exec();
+    if (!note) {
+        return res.status(404).json({ message: 'Note not found' });
+    }
+    const duplicate = await Note.findOne({ title }).lean().exec()
+    if (duplicate && duplicate._id.toString() !== id) {
+        return res.status(409).json({ message: 'Note already exists' });
+    }
+    note.title = title;
+    note.text = text;
+    note.completed = completed;
+    const updatedNote = await note.save();
+    updatedNote ? res.status(200).json({ message: `Note ${title} succesfully updated` }) : res.status(400).json({ message: 'Invalid note data' });
+})
+
 
 
 
